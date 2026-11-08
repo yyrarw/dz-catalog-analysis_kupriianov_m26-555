@@ -72,6 +72,30 @@ def duration_in_hours(minutes):
     return f"{hours}ч {rest}м"
 
 
+# Этап 2. Условия и match
+
+
+def rating_tier(rating):
+    """Категория фильма по оценке."""
+    if rating >= 9:
+        return "шедевр"
+    elif rating >= 7:
+        return "хорошо"
+    else:
+        return "средне" if rating >= 5 else "слабо"
+
+
+def decade_label(year):
+    """Метка свежести фильма по году выпуска."""
+    match year:
+        case _ if year > 2020:
+            return "новые"
+        case _ if year >= 2015:
+            return "недавние"
+        case _:
+            return "старые"
+
+
 # Демонстрация работы функций по этапам
 
 
@@ -81,6 +105,13 @@ def demo(movies):
     print(f"  average_rating: {average_rating(movies)}")
     print(f"  catalog_age_stats: {catalog_age_stats(movies)}")
     print(f"  duration_in_hours(155): {duration_in_hours(155)}")
+
+    print()
+    print("Этап 2. Категории")
+    for movie in movies:
+        tier = rating_tier(movie["rating"])
+        label = decade_label(movie["year"])
+        print(f"  {movie['title']}: {movie['rating']} — {tier}, {label}")
 
 
 if __name__ == "__main__":

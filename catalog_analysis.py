@@ -132,6 +132,33 @@ def count_long_movies(movies, threshold=120):
     return count
 
 
+# Этап 4. Строки
+
+
+def normalize_title(title):
+    """Приводит название к Title Case без str.title()."""
+    words = []
+    for word in title.split():
+        words.append(word[0].upper() + word[1:])
+    return " ".join(words)
+
+
+def make_slug(title):
+    """Превращает нормализованное название в слаг вида the-quiet-algorithm."""
+    return normalize_title(title).lower().replace(" ", "-")
+
+
+def format_report_line(movie):
+    """Строка отчета с описанием фильма."""
+    title = normalize_title(movie["title"])
+    duration = duration_in_hours(movie["duration_min"])
+    genres = ", ".join(sorted(movie["genres"]))
+    return (
+        f'"{title}" ({movie["year"]}) — {movie["rating"]}/10, '
+        f"{duration}, жанры: {genres}"
+    )
+
+
 # Демонстрация работы функций по этапам
 
 
@@ -158,6 +185,12 @@ def demo(movies):
     print(" Поиск шедевра в каталоге без The Quiet Algorithm:")
     find_first_masterpiece(movies[:7])
     print(f"  count_long_movies: {count_long_movies(movies)}")
+
+    print()
+    print("Этап 4. Строки")
+    print(f"  normalize_title: {normalize_title('silent hours')}")
+    print(f"  make_slug: {make_slug('Silent Hours')}")
+    print(f"  format_report_line: {format_report_line(movies[7])}")
 
 
 if __name__ == "__main__":

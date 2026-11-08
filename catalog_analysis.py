@@ -205,6 +205,27 @@ def above_average_ratings(movies):
     }
 
 
+# Этап 7. Множества
+
+
+def all_genres(movies):
+    """Множество всех уникальных жанров каталога."""
+    genres = set()
+    for movie in movies:
+        genres |= movie["genres"]
+    return genres
+
+
+def common_actors(movie1, movie2):
+    """Актеры, снимавшиеся в обоих фильмах."""
+    return set(movie1["actors"]) & set(movie2["actors"])
+
+
+def genres_only_in_one(movies_a, movies_b):
+    """Жанры, которые есть в movies_a, но отсутствуют в movies_b."""
+    return all_genres(movies_a) - all_genres(movies_b)
+
+
 # Демонстрация работы функций по этапам
 
 
@@ -250,6 +271,12 @@ def demo(movies):
     for actor, titles in actor_filmography(movies).items():
         print(f"    {actor}: {', '.join(titles)}")
     print(f"  above_average_ratings: {above_average_ratings(movies)}")
+
+    print()
+    print("Этап 7. Множества")
+    print(f"  all_genres: {sorted(all_genres(movies))}")
+    print(f"  common_actors: {common_actors(movies[0], movies[3])}")
+    print(f"  genres_only_in_one: {genres_only_in_one(movies[5:6], movies[:5])}")
 
 
 if __name__ == "__main__":

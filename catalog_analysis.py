@@ -243,6 +243,35 @@ def total_duration_high_rated(movies, min_rating=7):
     )
 
 
+# Этап 9. Итоговый отчет
+
+
+def build_report(movies):
+    """Печатает итоговый консольный отчет по каталогу."""
+    movies_by_title = {movie["title"]: movie for movie in movies}
+    _, _, average_age = catalog_age_stats(movies)
+    genre_counts = sorted(
+        count_by_genre(movies).items(), key=lambda item: (-item[1], item[0])
+    )
+
+    print("ОТЧЕТ ПО КАТАЛОГУ")
+    print(f"Средний рейтинг: {average_rating(movies)}")
+    print(f"Средний возраст фильмов: {average_age} лет")
+
+    print()
+    print("Топ-3 фильма:")
+    for title, _ in top_n_by_rating(movies, 3):
+        print(f"  {format_report_line(movies_by_title[title])}")
+
+    print()
+    print("Фильмов по жанрам:")
+    for genre, count in genre_counts:
+        print(f"  {genre} — {count}")
+
+    print()
+    print(f"Все жанры каталога: {', '.join(sorted(all_genres(movies)))}")
+
+
 # Демонстрация работы функций по этапам
 
 
@@ -304,4 +333,9 @@ def demo(movies):
 
 
 if __name__ == "__main__":
+    build_report(movies)
+    print()
+    print("=" * 60)
+    print("ДЕМОНСТРАЦИЯ ЭТАПОВ 1-8")
+    print("=" * 60)
     demo(movies)

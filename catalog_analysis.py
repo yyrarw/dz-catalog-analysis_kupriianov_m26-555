@@ -159,6 +159,21 @@ def format_report_line(movie):
     )
 
 
+# Этап 5. Списки
+
+
+def titles_sorted_by_rating(movies):
+    """Названия фильмов по убыванию рейтинга."""
+    ranked = sorted(movies, key=lambda movie: movie["rating"], reverse=True)
+    return [movie["title"] for movie in ranked]
+
+
+def top_n_by_rating(movies, n=3):
+    """Топ-n фильмов по рейтингу в виде кортежей (title, rating)."""
+    ranked = sorted(movies, key=lambda movie: movie["rating"], reverse=True)
+    return [(movie["title"], movie["rating"]) for movie in ranked[:n]]
+
+
 # Демонстрация работы функций по этапам
 
 
@@ -191,6 +206,11 @@ def demo(movies):
     print(f"  normalize_title: {normalize_title('silent hours')}")
     print(f"  make_slug: {make_slug('Silent Hours')}")
     print(f"  format_report_line: {format_report_line(movies[7])}")
+
+    print()
+    print("Этап 5. Списки")
+    print(f"  titles_sorted_by_rating: {titles_sorted_by_rating(movies)}")
+    print(f"  top_n_by_rating: {top_n_by_rating(movies, 3)}")
 
 
 if __name__ == "__main__":

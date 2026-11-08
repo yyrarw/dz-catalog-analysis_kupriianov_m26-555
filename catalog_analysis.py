@@ -1,3 +1,5 @@
+import math
+
 movies = [
     {
         "title": "The Dune Chronicles", "year": 2021, "genres": {"sci-fi", "drama"},
@@ -43,9 +45,43 @@ movies = [
 ]
 
 
-def main():
-    print(f"Фильмов в каталоге: {len(movies)}")
+# Этап 1. Переменные, числа, math
+
+
+def average_rating(movies):
+    """Средняя оценка по каталогу, округленная до одного знака."""
+    total = 0.0
+    for movie in movies:
+        total += movie["rating"]
+    return round(total / len(movies), 1)
+
+
+def catalog_age_stats(movies, current_year=2026):
+    """Возраст фильмов в годах: (самый старый, самый новый, среднее вверх)."""
+    ages = [current_year - movie["year"] for movie in movies]
+    oldest = max(ages)
+    newest = min(ages)
+    average = math.ceil(sum(ages) / len(ages))
+    return (oldest, newest, average)
+
+
+def duration_in_hours(minutes):
+    """Переводит минуты в строку вида "2ч 35м"."""
+    hours = minutes // 60
+    rest = minutes % 60
+    return f"{hours}ч {rest}м"
+
+
+# Демонстрация работы функций по этапам
+
+
+def demo(movies):
+    """Печатает результаты функций каждого этапа."""
+    print("Этап 1. Базовая статистика")
+    print(f"  average_rating: {average_rating(movies)}")
+    print(f"  catalog_age_stats: {catalog_age_stats(movies)}")
+    print(f"  duration_in_hours(155): {duration_in_hours(155)}")
 
 
 if __name__ == "__main__":
-    main()
+    demo(movies)

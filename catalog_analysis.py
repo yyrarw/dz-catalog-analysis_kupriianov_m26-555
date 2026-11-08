@@ -96,6 +96,42 @@ def decade_label(year):
             return "старые"
 
 
+# Этап 3. Циклы
+
+
+def print_non_comedy(movies):
+    """Печатает названия всех фильмов, не относящихся к комедиям."""
+    for movie in movies:
+        if "comedy" in movie["genres"]:
+            continue
+        print(f"  {movie['title']}")
+
+
+def find_first_masterpiece(movies, threshold=9.0):
+    """Ищет первый фильм с рейтингом выше threshold и печатает результат."""
+    found = None
+    index = 0
+    while index < len(movies):
+        movie = movies[index]
+        if movie["rating"] > threshold:
+            found = movie
+            print(f"  Первый шедевр: {movie['title']} ({movie['rating']})")
+            break
+        index += 1
+    else:
+        print("  Шедевров не найдено")
+    return found
+
+
+def count_long_movies(movies, threshold=120):
+    """Считает фильмы длиннее threshold минут."""
+    count = 0
+    for movie in movies:
+        if movie["duration_min"] > threshold:
+            count += 1
+    return count
+
+
 # Демонстрация работы функций по этапам
 
 
@@ -112,6 +148,16 @@ def demo(movies):
         tier = rating_tier(movie["rating"])
         label = decade_label(movie["year"])
         print(f"  {movie['title']}: {movie['rating']} — {tier}, {label}")
+
+    print()
+    print("Этап 3. Циклы")
+    print(" Фильмы не из жанра comedy:")
+    print_non_comedy(movies)
+    print(" Поиск шедевра в полном каталоге:")
+    find_first_masterpiece(movies)
+    print(" Поиск шедевра в каталоге без The Quiet Algorithm:")
+    find_first_masterpiece(movies[:7])
+    print(f"  count_long_movies: {count_long_movies(movies)}")
 
 
 if __name__ == "__main__":
